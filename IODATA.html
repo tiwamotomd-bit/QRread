@@ -3,18 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <title>QRコード読み取り</title>
-  <script src="https://unpkg.com/html5-qrcode"></script>
+  https://unpkg.com/html5-qrcode</script>
   <style>
     body { font-family: sans-serif; text-align: center; padding: 20px; }
     #reader { width: 300px; margin: auto; }
     #result { margin-top: 20px; font-size: 1.1em; }
     a { word-break: break-all; }
+    #reload-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #reload-btn:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 <body>
   <h2>QRコードを読み取ってフォームを開く</h2>
   <div id="reader"></div>
   <div id="result">カメラを許可して、QRコードをかざしてください。</div>
+  <button id="reload-btn" onclick="reloadPage()">🔄 再読み込み</button>
 
   <script>
     const baseUrl = "https://9cc8ab92.form.kintoneapp.com/public/e4ab891e5494ce9c1c235c90e0ac3c695df68c7850c77937de9e10477631e41a?記入ベンダー=アイ・オー・データ&";
@@ -23,10 +37,14 @@
       const url = baseUrl + decodedText;
       document.getElementById('result').innerHTML = `
         ✅ 読み取り成功！<br><br>
-        <a href="${url}" target="_blank">${url}</a><br><br>
+        ${url}${url}</a><br><br>
         （リンクをタップしてフォームを開く）
       `;
       html5QrCode.stop();
+    }
+
+    function reloadPage() {
+      location.reload();
     }
 
     const html5QrCode = new Html5Qrcode("reader");
